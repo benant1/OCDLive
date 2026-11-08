@@ -1,0 +1,646 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>OCD Live</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Concept : une vitrine blanche, une Afrique éclairée à l’or, du cuivre pour agir. */
+:root{
+ --cu:#B3541C;--cu-d:#8C3F10;--on-cu:#FFFFFF;--cu-soft:#FCEBDD;
+ --gold:#F2B33D;--gold-hi:#FFD47A;--glow:rgba(242,179,61,.5);
+ --bg:#FFFFFF;--bg2:#FAF5EF;--card:#FFFFFF;--ink:#17110D;--ink2:#5F5148;--line:#EBDFD2;
+ --bg-a:rgba(255,255,255,.88);--map-fill:#FFF9F1;
+ --dark:#17110D;--on-dark:#F8F1E8;--dark2:#241B15;--dark-line:#3A2C22;
+ --ok:#1D7A4A;--ok-bg:#E3F3EA;--warn:#8F5A0E;--warn-bg:#FBF0D9;--bad:#A8321C;--bad-bg:#FBE4DE;
+ --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Figtree',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --cu:#EE8F50;--cu-d:#F5AE7C;--on-cu:#1C0F06;--cu-soft:#2E1B10;
+ --bg:#120D0A;--bg2:#1A130E;--card:#1D1611;--ink:#F7F0E8;--ink2:#BBAB9B;--line:#36291F;
+ --bg-a:rgba(18,13,10,.88);--map-fill:#1F1812;--dark:#0A0604;--dark2:#17100B;--dark-line:#33261C;
+ --ok:#58C88A;--ok-bg:#12281C;--warn:#E9B558;--warn-bg:#2B2110;--bad:#F08A72;--bad-bg:#2D1510;color-scheme:dark}}
+:root[data-theme="dark"]{
+ --cu:#EE8F50;--cu-d:#F5AE7C;--on-cu:#1C0F06;--cu-soft:#2E1B10;
+ --bg:#120D0A;--bg2:#1A130E;--card:#1D1611;--ink:#F7F0E8;--ink2:#BBAB9B;--line:#36291F;
+ --bg-a:rgba(18,13,10,.88);--map-fill:#1F1812;--dark:#0A0604;--dark2:#17100B;--dark-line:#33261C;
+ --ok:#58C88A;--ok-bg:#12281C;--warn:#E9B558;--warn-bg:#2B2110;--bad:#F08A72;--bad-bg:#2D1510;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--display);margin:0;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0}a{color:inherit}button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ic{flex:none}
+.w{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(56px,8vw,104px)}
+.alt{background:var(--bg2)}
+.dk{background:var(--dark);color:var(--on-dark);--logo-ink:var(--on-dark)}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font:600 .78rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--cu)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cu);box-shadow:0 0 0 0 var(--glow);animation:ping 2.2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(242,179,61,0)}100%{box-shadow:0 0 0 0 rgba(242,179,61,0)}}
+.h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800}
+.lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--ink2);max-width:56ch}
+.dk .lead{color:#CDBBA9}
+.muted{color:var(--ink2)}.mono{font-family:var(--mono)}
+/* boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1.5px solid transparent;border-radius:999px;padding:.8rem 1.35rem;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -10px var(--glow)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-cu{background:var(--cu);color:var(--on-cu)}.btn-cu:hover{background:var(--cu-d)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--cu);color:var(--cu)}
+.btn-gold{background:var(--gold);color:#1A1109}
+.btn-dark{background:var(--dark);color:var(--on-dark)}
+.dk .btn-ghost{border-color:var(--dark-line);color:var(--on-dark)}
+.btn-lg{padding:1rem 1.7rem;font-size:1.02rem}.btn-sm{padding:.5rem .9rem;font-size:.85rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem}
+/* logo */
+.logo{display:inline-flex;flex-direction:column;align-items:flex-end;line-height:.8;text-decoration:none}
+.lo{font:800 1.9rem var(--display);color:var(--cu);letter-spacing:-.05em}
+.ll{font:700 .95rem var(--display);color:var(--logo-ink,var(--ink));letter-spacing:-.01em;margin-top:-.05rem}
+/* header */
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg-a);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hd .w{display:flex;align-items:center;gap:1.2rem;min-height:68px}
+.nav{display:flex;gap:1.4rem;margin-left:auto;align-items:center}
+.nav a{text-decoration:none;font-weight:600;font-size:.93rem;color:var(--ink2);padding:.4rem 0;border-bottom:2px solid transparent}
+.nav a:hover,.nav a.on{color:var(--ink);border-color:var(--gold)}
+.hd .btn{letter-spacing:.05em;font-size:.82rem;text-transform:uppercase}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;padding:.5rem;margin-left:auto}
+@media(max-width:1000px){
+ .burger{display:inline-flex}
+ .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:.5rem max(16px,env(safe-area-inset-left,0px)) 1rem;margin:0}
+ .nav.open{display:flex}.nav a{padding:.8rem 0;border-bottom:1px solid var(--line)}
+ .nav .btn{margin-top:.8rem}}
+.page{animation:fade .4s both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rise{animation:fade .8s both}
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:clamp(36px,6vw,72px) clamp(48px,7vw,88px);background:radial-gradient(60% 60% at 80% 40%,var(--cu-soft),transparent 70%)}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(24px,4vw,64px);align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
+.hero h1{font-size:clamp(2.5rem,6.4vw,5rem);font-weight:800;line-height:.98}
+.hero h1 em{font-style:normal;color:var(--cu)}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;font-size:.92rem;font-weight:600;color:var(--ink2)}
+.ticks li{display:flex;align-items:center;gap:.4rem}.ticks .ic{color:var(--cu)}
+.stage{position:relative;width:100%;max-width:580px;margin-inline:auto}
+.africa{width:100%;height:auto;display:block;overflow:visible}
+.halo{animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.lg-o{font:800 104px var(--display);fill:var(--cu);letter-spacing:-6px}
+.lg-l{font:700 48px var(--display);fill:var(--ink)}
+.pin-r{transform-box:fill-box;transform-origin:center;animation:ring 2.4s ease-out infinite}
+@keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(3.4);opacity:0}}
+.arc{stroke-dasharray:4 6;animation:dash 14s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-200}}
+.float{position:absolute;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.6rem .8rem;box-shadow:0 18px 40px -22px rgba(60,30,10,.45);font-size:.82rem;display:flex;align-items:center;gap:.6rem}
+.live-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--cu);color:var(--on-cu);border-radius:6px;padding:.2rem .5rem;font:700 .72rem var(--mono);letter-spacing:.08em}
+.live-chip i{width:7px;height:7px;border-radius:50%;background:currentColor;animation:ping 1.6s infinite}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.stage{max-width:460px}}
+/* sections */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:start}
+.two>*{min-width:0}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;gap:1rem;padding:1.2rem 0;border-top:1px solid var(--line)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row h3{font-size:1.15rem;margin-bottom:.25rem}
+.ico{width:46px;height:46px;border-radius:12px;background:var(--cu-soft);color:var(--cu);display:grid;place-items:center;flex:none}
+.adv{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem 2.4rem;margin-top:2.4rem}
+.adv>div{display:flex;gap:1rem}.adv h3{font-size:1.2rem;margin-bottom:.2rem}
+@media(max-width:700px){.adv{grid-template-columns:1fr}}
+/* type cards */
+.types{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+@media(max-width:860px){.types{grid-template-columns:1fr}}
+.tcard{background:var(--card);border:1.5px solid var(--line);border-radius:26px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,box-shadow .25s;min-width:0}
+.tcard:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 24px 50px -30px var(--glow)}
+.tcard.sel{border-color:var(--cu);box-shadow:0 0 0 3px var(--cu-soft)}
+.tcard .illo{background:var(--bg2);padding:1rem}
+.tcard .illo svg{width:100%;height:auto;max-height:230px;display:block}
+.tbody{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;flex:1}
+.tbody h3{font-size:1.6rem}
+.tbody ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.tbody li{display:flex;gap:.6rem;align-items:flex-start}.tbody li .ic{color:var(--cu);margin-top:.2rem}
+.tbody .btn{margin-top:auto;align-self:flex-start}
+/* mini offers */
+.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.2rem}
+@media(max-width:900px){.minis{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.minis{grid-template-columns:1fr}}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem;display:flex;flex-direction:column;gap:.7rem;text-align:left;transition:border-color .2s,transform .2s;min-width:0}
+.mini:hover{border-color:var(--cu);transform:translateY(-2px)}
+.mini h3{font-size:1.25rem}.mini .meta{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--ink2)}
+.meter{display:inline-flex;gap:3px}.meter i{width:14px;height:6px;border-radius:2px;background:var(--line)}.meter i.f{background:var(--gold)}
+/* étapes */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:2.4rem;counter-reset:s}
+.st{border-top:3px solid var(--gold);padding-top:1rem;display:flex;flex-direction:column;gap:.4rem}
+.st b{font:600 .8rem var(--mono);color:var(--cu)}.st h3{font-size:1.1rem}.st p{font-size:.9rem;color:var(--ink2)}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}@media(max-width:520px){.steps{grid-template-columns:1fr}}
+.cta{position:relative;overflow:hidden;text-align:center}
+.cta .w{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.cta .wm{position:absolute;inset:-10% 0 auto 50%;width:min(720px,110%);transform:translateX(-50%);opacity:.22;pointer-events:none}
+.cta h2{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;max-width:18ch}
+/* footer */
+.ft{background:var(--dark);color:var(--on-dark);--logo-ink:var(--on-dark);padding-block:3rem 2rem}
+.ft-g{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:2rem}
+@media(max-width:760px){.ft-g{grid-template-columns:1fr}}
+.ft h4{font:600 .78rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+.ft ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.ft a{text-decoration:none;color:#D8C8B7}.ft a:hover{color:var(--gold)}
+.ft .fine{border-top:1px solid var(--dark-line);margin-top:2rem;padding-top:1.2rem;font-size:.82rem;color:#A8978A}
+/* tunnel */
+.ph{padding-block:clamp(32px,5vw,56px) 24px}
+.ph h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;margin:.6rem 0 .8rem}
+.flow{display:flex;gap:.4rem;margin:1.6rem 0 0;padding:0;list-style:none;overflow-x:auto;scrollbar-width:none}
+.flow li{display:flex;align-items:center;gap:.5rem;font-size:.86rem;font-weight:600;color:var(--ink2);white-space:nowrap;padding:.45rem .8rem;border-radius:999px;border:1px solid var(--line)}
+.flow li b{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:600 .72rem var(--mono);background:var(--bg2)}
+.flow li.on{color:var(--on-cu);background:var(--cu);border-color:var(--cu)}.flow li.on b{background:rgba(255,255,255,.25)}
+.flow li.done{color:var(--ink);border-color:var(--gold)}.flow li.done b{background:var(--gold);color:#1A1109}
+/* calendrier */
+.cal-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.4rem;align-items:start}
+@media(max-width:940px){.cal-grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:1.4rem;min-width:0}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cal-h h2{font-size:1.5rem}
+.sq{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center}
+.sq:hover:not(:disabled){border-color:var(--cu);color:var(--cu)}.sq:disabled{opacity:.35;cursor:not-allowed}
+.dows,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dows span{font:600 .72rem var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);text-align:center;padding-bottom:.4rem}
+.day{aspect-ratio:1/.92;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:700;position:relative;padding:2px}
+.day small{font:500 .62rem var(--body);color:var(--ink2)}
+.day.av:hover{border-color:var(--cu);transform:translateY(-1px)}
+.day.av::after{content:"";position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.day.off{background:var(--bg2);color:var(--ink2);opacity:.55;cursor:not-allowed;border-style:dashed}
+.day.full{background:var(--bg2);color:var(--ink2);cursor:not-allowed}
+.day.sel{background:var(--cu);border-color:var(--cu);color:var(--on-cu)}.day.sel small{color:inherit}.day.sel::after{background:var(--gold)}
+.day.void{border:0;background:none;visibility:hidden}
+@media(max-width:520px){.day small{display:none}.day{min-height:42px}}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.8rem;color:var(--ink2);margin-top:1rem}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.4rem;vertical-align:-1px}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:.45rem .9rem;font-weight:600;font-size:.9rem}
+.chip:hover{border-color:var(--cu)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:.5rem}
+.slot{border:1.5px solid var(--line);border-radius:10px;background:var(--card);padding:.55rem 0;font:600 .88rem var(--mono)}
+.slot:hover:not(:disabled){border-color:var(--cu);color:var(--cu)}
+.slot:disabled{background:var(--bg2);color:var(--ink2);text-decoration:line-through;opacity:.5;cursor:not-allowed}
+.slot.on{background:var(--cu);border-color:var(--cu);color:var(--on-cu)}
+.recap{display:flex;flex-direction:column;gap:.7rem}
+.recap dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.55rem 1rem;font-size:.92rem}
+.recap dt{color:var(--ink2)}.recap dd{margin:0;font-weight:600;text-align:right;min-width:0;overflow-wrap:anywhere}
+.stack{display:flex;flex-direction:column;gap:1.2rem}
+.lbl{font:600 .76rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:.6rem;display:block}
+.note{display:flex;gap:.6rem;align-items:flex-start;background:var(--warn-bg);color:var(--warn);border-radius:12px;padding:.7rem .9rem;font-size:.9rem;font-weight:500}
+.note.ok{background:var(--ok-bg);color:var(--ok)}.note.bad{background:var(--bad-bg);color:var(--bad)}
+/* packages */
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:1000px){.packs{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.packs{grid-template-columns:1fr}}
+.pk{background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;position:relative;min-width:0;transition:transform .25s,border-color .25s}
+.pk:hover{transform:translateY(-4px);border-color:var(--gold)}
+.pk h3{font-size:1.6rem}
+.pk .top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.pk .dur{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem var(--mono);color:var(--ink2)}
+.price{font:700 1.5rem var(--display);color:var(--cu)}.price.tbd{font:500 .95rem var(--mono);color:var(--ink2);border:1px dashed var(--line);border-radius:8px;padding:.4rem .6rem;align-self:flex-start}
+.pk ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem;font-size:.93rem}
+.pk li{display:flex;gap:.55rem;align-items:flex-start}.pk li .ic{color:var(--cu);margin-top:.22rem}
+.pk .btn{margin-top:auto}
+.pk.sel{border-color:var(--cu);box-shadow:0 0 0 3px var(--cu-soft)}
+.pk.vip{background:var(--dark);color:var(--on-dark);border-color:var(--gold);box-shadow:0 30px 60px -34px var(--glow)}
+.pk.vip .dur,.pk.vip .price.tbd{color:#CDBBA9;border-color:var(--dark-line)}.pk.vip .price{color:var(--gold)}.pk.vip li .ic{color:var(--gold)}
+.pk.vip .meter i{background:var(--dark-line)}.pk.vip .meter i.f{background:var(--gold)}
+.badge{position:absolute;top:-11px;right:18px;background:var(--gold);color:#1A1109;font:700 .7rem var(--body);letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:999px}
+/* formulaire */
+.form-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1.4rem;align-items:start}
+@media(max-width:940px){.form-grid{grid-template-columns:1fr}}
+.fs{display:flex;gap:.5rem;margin-bottom:1.4rem}
+.fs span{flex:1;height:5px;border-radius:3px;background:var(--line)}.fs span.on{background:var(--cu)}.fs span.done{background:var(--gold)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.fgrid{grid-template-columns:1fr}}
+.fld{display:flex;flex-direction:column;gap:.35rem;min-width:0}.fld.full{grid-column:1/-1}
+.fld label{font-weight:600;font-size:.88rem}
+.fld input,.fld select,.fld textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:.75rem .9rem;min-height:48px}
+.fld textarea{resize:vertical;min-height:96px}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--cu);box-shadow:0 0 0 3px var(--cu-soft)}
+.fld.err input,.fld.err select,.fld.err textarea{border-color:var(--bad)}
+.fld .em{color:var(--bad);font-size:.8rem;font-weight:600}
+.fnav{display:flex;justify-content:space-between;gap:.8rem;margin-top:1.6rem;flex-wrap:wrap}
+.rv{border:1px solid var(--line);border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+.rv header{display:flex;justify-content:space-between;align-items:center}.rv h4{font-size:1.05rem}
+.rv dl{margin:0;display:grid;grid-template-columns:minmax(90px,auto) 1fr;gap:.3rem 1rem;font-size:.9rem}.rv dt{color:var(--ink2)}.rv dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.link{background:none;border:0;color:var(--cu);font-weight:700;padding:0;text-decoration:underline;text-underline-offset:3px}
+/* paiement */
+.meths{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:560px){.meths{grid-template-columns:1fr}}
+.meth{border:1.5px dashed var(--line);border-radius:16px;padding:1rem;display:flex;flex-direction:column;gap:.5rem;text-align:left;background:var(--card);min-width:0}
+.meth:hover{border-color:var(--cu)}.meth.on{border:1.5px solid var(--cu);background:var(--cu-soft)}
+.meth b{display:flex;align-items:center;gap:.5rem}.meth small{color:var(--ink2);font-size:.8rem}
+.pill{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.2rem .65rem;font-size:.78rem;font-weight:700;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.n{background:var(--bg2);color:var(--ink2)}
+.ok-wrap{max-width:760px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.2rem}
+.check{width:84px;height:84px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center;box-shadow:0 0 0 10px var(--ok-bg);animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.num{font:600 1.5rem var(--mono);border:2px dashed var(--gold);border-radius:12px;padding:.6rem 1.2rem;letter-spacing:.06em}
+.mail{width:100%;text-align:left;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.mail header{background:var(--bg2);padding:.8rem 1rem;font-size:.85rem;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:.15rem}
+.mail dl{margin:0;padding:1rem;display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:.4rem 1rem;font-size:.9rem}.mail dt{color:var(--ink2)}.mail dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+/* admin */
+.adm{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh;background:var(--bg2)}
+.side{background:var(--dark);color:var(--on-dark);--logo-ink:var(--on-dark);padding:1.2rem .9rem;display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;align-self:start}
+.side .tag{font:600 .7rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.side nav{display:flex;flex-direction:column;gap:.2rem}
+.sn{display:flex;align-items:center;gap:.7rem;background:none;border:0;border-radius:10px;padding:.65rem .8rem;color:#CDBBA9;font-weight:600;text-align:left}
+.sn:hover{background:var(--dark2);color:#fff}.sn.on{background:var(--dark2);color:var(--gold);box-shadow:inset 3px 0 0 var(--gold)}
+.sn .cnt{margin-left:auto;background:var(--cu);color:var(--on-cu);border-radius:999px;font-size:.7rem;padding:.05rem .45rem}
+.main{padding:1.4rem max(16px,env(safe-area-inset-right,0px)) 3rem 1.6rem;min-width:0;display:flex;flex-direction:column;gap:1.4rem}
+.tb{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tb h1{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+@media(max-width:940px){.adm{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:.8rem max(16px,env(safe-area-inset-left,0px))}
+ .side nav{flex-direction:row;overflow-x:auto;width:100%;order:3;scrollbar-width:none}.sn{white-space:nowrap}.sn.on{box-shadow:inset 0 -3px 0 var(--gold)}
+ .main{padding-left:max(16px,env(safe-area-inset-left,0px))}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.1rem;display:flex;flex-direction:column;gap:.3rem}
+.kpi span{font-size:.82rem;color:var(--ink2);font-weight:600;display:flex;gap:.4rem;align-items:center}
+.kpi b{font:800 2.2rem var(--display);font-variant-numeric:tabular-nums}
+.g2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1rem}
+@media(max-width:1000px){.g2{grid-template-columns:1fr}}
+.card h3{font-size:1.15rem;margin-bottom:1rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:720px;font-variant-numeric:tabular-nums}
+th{text-align:left;font:600 .72rem var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);padding:.6rem .7rem;border-bottom:1px solid var(--line)}
+td{padding:.75rem .7rem;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr.clk{cursor:pointer}tbody tr.clk:hover{background:var(--bg2)}
+.li{display:flex;gap:.8rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--line)}.li:last-child{border:0}
+.li .when{font:600 .78rem var(--mono);color:var(--cu);min-width:64px}
+.li div{min-width:0}.li small{color:var(--ink2);display:block}
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+.acal{display:grid;grid-template-columns:repeat(7,minmax(96px,1fr));gap:4px;min-width:700px}
+.ac{min-height:92px;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:.35rem;display:flex;flex-direction:column;gap:3px;font-size:.72rem}
+.ac>b{font-size:.78rem}.ac.void{visibility:hidden}
+.ev{border-radius:6px;padding:2px 5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev.ok{background:var(--ok-bg);color:var(--ok)}.ev.warn{background:var(--warn-bg);color:var(--warn)}.ev.bad{background:var(--bad-bg);color:var(--bad)}
+.sw{width:46px;height:26px;border-radius:999px;border:0;background:var(--line);position:relative;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw[aria-checked="true"]{background:var(--cu)}.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.ov{position:fixed;inset:0;background:rgba(10,6,4,.55);z-index:80}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:90;overflow-y:auto;padding:max(1.2rem,env(safe-area-inset-top,0px)) max(1.2rem,env(safe-area-inset-right,0px)) 2rem 1.4rem;display:flex;flex-direction:column;gap:1.1rem;animation:slide .3s both}
+@keyframes slide{from{transform:translateX(30px);opacity:0}}
+.login{min-height:100vh;display:grid;place-items:center;padding:2rem max(16px,env(safe-area-inset-left,0px));background:var(--dark);color:var(--on-dark);--logo-ink:var(--on-dark)}
+.login .card{background:var(--dark2);border-color:var(--dark-line);max-width:420px;width:100%;display:flex;flex-direction:column;gap:1rem}
+.login .fld input{background:var(--dark);color:var(--on-dark);border-color:var(--dark-line)}
+.ed{display:grid;grid-template-columns:1fr 120px 130px;gap:.7rem}
+@media(max-width:620px){.ed{grid-template-columns:1fr 1fr}.ed .fld:first-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+<div id="app"></div>
+<script>
+const app=document.getElementById('app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ICONS={
+'arrow':'<path d="M5 12h14M12 5l7 7-7 7"/>','check':'<path d="M20 6 9 17l-5-5"/>',
+'cal':'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+'clock':'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+'video':'<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+'pin':'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+'globe':'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+'users':'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+'bell':'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+'mail':'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>',
+'chat':'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/>',
+'card':'<rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>',
+'phone':'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
+'shield':'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+'dash':'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>',
+'box':'<path d="M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8"/>',
+'star':'<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+'menu':'<path d="M3 12h18M3 6h18M3 18h18"/>','x':'<path d="M18 6 6 18M6 6l12 12"/>',
+'mega':'<path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+'trend':'<path d="m22 7-8.5 8.5-5-5L2 17M16 7h6v6"/>',
+'left':'<path d="m15 18-6-6 6-6"/>','right':'<path d="m9 18 6-6-6-6"/>',
+'lock':'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+'plus':'<path d="M12 5v14M5 12h14"/>','user':'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',
+'out':'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>'};
+const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
+const logo=()=>`<span class="logo" role="img" aria-label="OCD Live"><span class="lo">OCD</span><span class="ll">Live</span></span>`;
+
+/* ---------- données simulées (faciles à modifier) ---------- */
+const PACKS=[
+{id:'starter',name:'Starter',tag:'Pour découvrir le LIVE',dur:30,lvl:1,price:'',perks:['1 passage LIVE de présentation','Briefing avec l’équipe OCD','1 produit ou service mis en avant','Replay envoyé sur WhatsApp']},
+{id:'business',name:'Business',tag:'Pour présenter votre gamme',dur:60,lvl:2,price:'',perks:['Tout le pack Starter','Présentation de plusieurs produits','Animation par une assistante OCD','Annonce du LIVE sur les réseaux OCD']},
+{id:'premium',name:'Premium',tag:'Pour convaincre en direct',dur:90,lvl:3,price:'',perks:['Tout le pack Business','Script préparé avec vous','Questions-réponses avec l’audience','Extraits vidéo prêts à publier']},
+{id:'plus',name:'Visibilité Plus',tag:'Pour élargir votre audience',dur:60,lvl:4,price:'',perks:['Publication promotionnelle avant le LIVE','Rappel le jour J aux abonnés OCD','Mise en avant dans le programme','Bilan de visibilité après le LIVE']},
+{id:'pro',name:'Business Pro',tag:'Pour les entreprises établies',dur:120,lvl:5,price:'',perks:['Tout le pack Visibilité Plus','Plusieurs séquences produits','Montage et diffusion des replays','Suivi des contacts générés']},
+{id:'vip',name:'Partenaire VIP',tag:'Visibilité renforcée',dur:180,lvl:6,price:'',perks:['Tout le pack Business Pro','Publications promotionnelles dédiées','Campagne de communication sur les réseaux OCD','Interlocuteur dédié à votre marque','Priorité sur le calendrier']}];
+const DURS=[30,60,90,120,180];
+const durLbl=d=>d<60?d+' min':(d%60?Math.floor(d/60)+' h '+(d%60):Math.floor(d/60)+' h');
+const priceTxt=p=>p.price?esc(p.price):'Tarif à définir';
+const getPack=id=>PACKS.find(p=>p.id===id);
+const TYPES={presentiel:'LIVE en présentiel',distance:'LIVE à distance'};
+const PAYS=['Togo','Bénin','Côte d’Ivoire','Sénégal','Ghana','Nigéria','Cameroun','Burkina Faso','Mali','Gabon','RD Congo','France','Belgique','Canada','États-Unis','Autre pays'];
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const START='2026-12-01',CELLS=[];for(let m=540;m<1080;m+=30)CELLS.push(m);
+const BREAK=[750,780];
+const pad=n=>String(n).padStart(2,'0');
+const isoD=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
+const dObj=i=>new Date(i+'T00:00:00Z');
+const fmtLong=i=>dObj(i).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+const fmtShort=i=>dObj(i).toLocaleDateString('fr-FR',{day:'numeric',month:'short',timeZone:'UTC'});
+const hm=m=>`${pad(Math.floor(m/60))}:${pad(m%60)}`;
+const hash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+
+const SEED=[
+['1031','Afi Mensah','Afi Mode','Mode et couture','Togo','Lomé','+228 90 12 34 56','afi@exemple.test','presentiel','business','2026-12-02',600,'confirmee','paye','Robes, pagnes, accessoires','Collection de fin d’année en tissus locaux.','Quartier Tokoin'],
+['1032','Koffi Agbodjan','Agbodjan Électro','Électroménager','Bénin','Cotonou','+229 97 11 22 33','koffi@exemple.test','distance','premium','2026-12-03',840,'attente','attente','Réfrigérateurs, climatiseurs','Vente et installation, livraison au Bénin.',''],
+['1033','Aïcha Diallo','Karité d’Or','Cosmétiques naturels','Sénégal','Dakar','+221 77 000 11 22','aicha@exemple.test','distance','plus','2026-12-04',570,'confirmee','paye','Beurre de karité, savons','Soins artisanaux, fabrication locale.',''],
+['1034','Yao Kpodar','Kpodar Auto Pièces','Pièces automobiles','Togo','Lomé','+228 91 55 66 77','yao@exemple.test','presentiel','starter','2026-12-07',900,'attente','attente','Plaquettes, filtres, batteries','Pièces neuves et d’occasion.','Zone portuaire'],
+['1035','Mariam Traoré','Saveurs d’Abidjan','Restauration','Côte d’Ivoire','Abidjan','+225 07 00 11 22','mariam@exemple.test','distance','business','2026-12-09',660,'confirmee','paye','Plats à emporter, traiteur','Cuisine ivoirienne, commandes pour événements.',''],
+['1036','Fatou Ndiaye','Atelier Ndiaye','Artisanat','Togo','Kpalimé','+228 92 44 33 22','fatou@exemple.test','presentiel','business','2026-12-10',840,'annulee','echoue','Paniers, poteries','Artisanat de la région des Plateaux.','Kpalimé centre'],
+['1037','Jean-Claude Ndong','Ndong Immobilier','Immobilier','Gabon','Libreville','+241 06 12 34 56','jc@exemple.test','distance','pro','2026-12-15',600,'attente','attente','Terrains, villas','Programmes neufs à Libreville.',''],
+['1038','Esther Adjovi','Épices du Golfe','Alimentation','France','Paris','+33 6 12 34 56 78','esther@exemple.test','distance','vip','2026-12-16',840,'confirmee','paye','Épices, sauces, thés','Épicerie africaine en ligne.',''],
+['1039','Kwame Boateng','Boateng Textiles','Textile','Ghana','Accra','+233 24 123 4567','kwame@exemple.test','distance','premium','2026-12-22',600,'attente','attente','Wax, kente','Tissus en gros et au détail.',''],
+['1040','Sandrine Mbarga','Sandra Beauty','Coiffure et beauté','Cameroun','Douala','+237 6 70 00 11 22','sandrine@exemple.test','distance','plus','2026-12-29',600,'confirmee','paye','Perruques, soins capillaires','Salon et vente de produits capillaires.','']];
+const mk=r=>({id:'OCD-26-'+r[0],name:r[1],biz:r[2],dom:r[3],country:r[4],city:r[5],phone:r[6],email:r[7],type:r[8],pack:r[9],date:r[10],start:r[11],dur:getPack(r[9]).dur,status:r[12],pay:r[13],prod:r[14],desc:r[15],addr:r[16]});
+const S={route:'accueil',menu:false,flow:false,type:null,pack:null,date:null,slot:null,dur:60,month:{y:2026,m:11},
+ step:0,errors:{},form:{nom:'',whatsapp:'',email:'',pays:'Togo',ville:'',entreprise:'',domaine:'',produits:'',description:'',adresse:''},
+ method:null,pay:'idle',last:null,auth:false,view:'dash',filter:'all',detail:null,amonth:{y:2026,m:11},
+ openDays:{0:false,1:true,2:true,3:true,4:true,5:true,6:true},blocked:[],taken:new Set(),
+ bookings:SEED.map(mk),cfg:{email:true,dash:true,wa:false},mailTo:'reservations@ocd-live.example',
+ notifs:[]};
+const addTaken=b=>{for(let c=b.start;c<b.start+b.dur;c+=30)S.taken.add(b.date+'|'+c)};
+S.bookings.forEach(b=>{if(b.status!=='annulee')addTaken(b)});
+S.notifs=S.bookings.filter(b=>b.status!=='annulee').slice(-4).reverse().map((b,i)=>({id:i,b:b.id,t:['il y a 2 h','hier','hier','il y a 2 jours'][i],unread:i<2}));
+
+/* ---------- disponibilités ---------- */
+const wd=i=>dObj(i).getUTCDay();
+const dayOpen=d=>d>=START&&!S.blocked.includes(d)&&S.openDays[wd(d)];
+const cellTaken=(d,c)=>BREAK.includes(c)||S.taken.has(d+'|'+c)||hash(d+'#'+c)%100<18;
+function slotsFor(d,dur){const n=Math.ceil(dur/30);return CELLS.map(c=>{let ok=dayOpen(d)&&c+n*30<=1080;for(let k=0;ok&&k<n;k++)if(cellTaken(d,c+k*30))ok=false;return{c,ok}})}
+const okCount=(d,dur)=>slotsFor(d,dur).filter(s=>s.ok).length;
+
+/* ---------- carte d’Afrique ---------- */
+const AFRICA='M92 78L118 56L160 50L205 38L240 42L262 62L280 78L300 90L318 74L345 66L378 70L396 92L412 128L424 160L440 190L470 196L512 206L492 246L462 282L440 316L430 350L420 392L400 430L372 468L340 496L300 512L262 512L236 490L222 452L214 410L210 372L198 336L190 306L176 282L166 262L176 246L154 242L130 240L108 244L82 252L54 236L34 212L18 186L12 156L20 128L34 108L56 98L74 90Z';
+const MADA='M478 360L492 340L502 360L494 396L478 408L470 386Z';
+const TOGO=[128,238];
+const CITIES=[[30,150],[236,306],[400,284],[318,430],[352,104]];
+function africa(id,o={}){
+ const arcs=o.pins?CITIES.map(c=>`<path class="arc" d="M${c[0]} ${c[1]}Q${(c[0]+TOGO[0])/2} ${Math.min(c[1],TOGO[1])-70} ${TOGO[0]} ${TOGO[1]}" fill="none" stroke="var(--cu)" stroke-width="1.6" opacity=".65"/>`).join('')+CITIES.map(c=>`<circle cx="${c[0]}" cy="${c[1]}" r="4.5" fill="var(--card)" stroke="var(--cu)" stroke-width="2"/>`).join('')+`<circle class="pin-r" cx="${TOGO[0]}" cy="${TOGO[1]}" r="6" fill="var(--cu)"/><circle cx="${TOGO[0]}" cy="${TOGO[1]}" r="7" fill="var(--cu)" stroke="var(--card)" stroke-width="3"/><text x="${TOGO[0]-70}" y="276" font-size="16" font-weight="700" style="fill:var(--ink);font-family:var(--body)">Studio OCD · Togo</text>`:'';
+ const lg=o.logo?`<text class="lg-o" x="214" y="188" text-anchor="middle">OCD</text><text class="lg-l" x="324" y="236" text-anchor="end">Live</text>`:'';
+ return `<svg class="africa" viewBox="-14 22 548 512" role="img" aria-label="Carte stylisée de l’Afrique éclairée"><defs><filter id="bl${id}" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+ <g class="halo" filter="url(#bl${id})"><path d="${AFRICA}" fill="none" stroke="var(--gold)" stroke-width="18"/><path d="${MADA}" fill="none" stroke="var(--gold)" stroke-width="14"/></g>
+ <path d="${AFRICA}" fill="${o.fill||'var(--map-fill)'}" stroke="var(--gold-hi)" stroke-width="3.5" stroke-linejoin="round"/><path d="${MADA}" fill="${o.fill||'var(--map-fill)'}" stroke="var(--gold-hi)" stroke-width="3.5" stroke-linejoin="round"/>${arcs}${lg}</svg>`}
+
+function illoPres(){return `<svg viewBox="0 0 320 200" role="img" aria-label="Studio OCD avec bureau et éclairage"><rect width="320" height="200" rx="16" fill="var(--map-fill)"/><g transform="translate(176 12) scale(.2)"><path d="${AFRICA}" fill="none" stroke="var(--gold)" stroke-width="22" opacity=".5"/><path d="${AFRICA}" fill="none" stroke="var(--gold-hi)" stroke-width="8"/></g><circle cx="70" cy="92" r="24" fill="none" stroke="var(--gold)" stroke-width="6"/><path d="M70 116v38" stroke="var(--ink2)" stroke-width="4"/><circle cx="160" cy="106" r="17" fill="var(--ink)"/><path d="M122 150q38-52 76 0z" fill="var(--cu)"/><rect x="52" y="148" width="216" height="14" rx="4" fill="var(--ink2)"/><path d="M76 162v26M244 162v26" stroke="var(--ink2)" stroke-width="5"/><rect x="262" y="92" width="26" height="18" rx="3" fill="var(--ink)"/><circle cx="275" cy="101" r="4" fill="var(--gold)"/><path d="M275 110l-10 40M275 110l10 40" stroke="var(--ink)" stroke-width="3"/></svg>`}
+function illoDist(){return `<svg viewBox="0 0 320 200" role="img" aria-label="Téléphone en LIVE connecté au studio"><rect width="320" height="200" rx="16" fill="var(--map-fill)"/><circle cx="52" cy="100" r="30" fill="none" stroke="var(--gold)" stroke-width="5"/><ellipse cx="52" cy="100" rx="12" ry="30" fill="none" stroke="var(--gold)" stroke-width="3"/><path d="M22 100h60" stroke="var(--gold)" stroke-width="3"/><path class="arc" d="M84 94Q120 40 150 80" fill="none" stroke="var(--cu)" stroke-width="3"/><rect x="132" y="14" width="96" height="172" rx="16" fill="var(--card)" stroke="var(--ink)" stroke-width="5"/><rect x="144" y="30" width="72" height="140" rx="8" fill="var(--bg2)"/><circle cx="180" cy="86" r="16" fill="var(--ink)"/><path d="M148 150q32-52 64 0z" fill="var(--cu)"/><rect x="150" y="36" width="36" height="14" rx="4" fill="var(--cu)"/><circle cx="158" cy="43" r="3" fill="var(--on-cu)"/><path d="M250 70q18 14 0 36M262 58q28 26 0 60" fill="none" stroke="var(--gold)" stroke-width="4" stroke-linecap="round"/></svg>`}
+/* ---------- site public ---------- */
+function header(){
+ const r=S.route,on=k=>r===k?' class="on"':'';
+ return `<header class="hd"><div class="w"><a href="#accueil" data-go="accueil" aria-label="Accueil OCD Live">${logo()}</a>
+ <button class="burger" data-act="menu" aria-label="Menu" aria-expanded="${S.menu}">${ic(S.menu?'x':'menu',22)}</button>
+ <nav class="nav${S.menu?' open':''}" aria-label="Navigation principale">
+ <a href="#accueil" data-go="accueil"${on('accueil')}>Accueil</a>
+ <a href="#accueil" data-scroll="concept">Notre concept</a>
+ <a href="#packages" data-go="packages"${on('packages')}>Nos offres</a>
+ <a href="#accueil" data-scroll="etapes">Comment ça marche</a>
+ <a href="#accueil" data-scroll="contact">Contact</a>
+ <button class="btn btn-cu" data-act="reserve">Réserver mon LIVE</button></nav></div></header>`}
+function footer(){return `<footer class="ft" id="contact"><div class="w"><div class="ft-g">
+ <div>${logo()}<p style="margin-top:1rem;color:#D8C8B7;max-width:34ch">Réservez un LIVE pour présenter vos produits et gagner en visibilité, depuis le studio OCD au Togo ou à distance.</p></div>
+ <div><h4>Navigation</h4><ul><li><a href="#accueil" data-go="accueil">Accueil</a></li><li><a href="#packages" data-go="packages">Nos offres</a></li><li><a href="#type" data-go="type">Réserver un LIVE</a></li><li><a href="#admin" data-go="admin">Espace équipe OCD</a></li></ul></div>
+ <div><h4>Contact</h4><ul><li>WhatsApp : <span class="mono">+228 00 00 00 00</span></li><li>Email : <span class="mono">contact@ocd-live.example</span></li><li>Studio OCD Live, Togo</li></ul></div></div>
+ <p class="fine">Maquette de présentation. Les données, tarifs et coordonnées sont des exemples à remplacer.</p></div></footer>`}
+
+function typeCards(sel){
+ const T=[['presentiel','LIVE en présentiel',illoPres(),'Venez présenter vos produits dans nos locaux, face caméra, avec l’équipe à vos côtés.',['Réservation dans les locaux OCD au Togo','Accompagnement sur place','Présentation directe des produits']],
+ ['distance','LIVE à distance',illoDist(),'Participez depuis n’importe quel pays, avec une assistante OCD qui anime et guide le LIVE.',['Accessible depuis l’Afrique et le reste du monde','Accompagnement par une assistante OCD','Participation depuis votre domicile ou votre commerce']]];
+ return `<div class="types">${T.map(t=>`<article class="tcard${sel===t[0]?' sel':''}"><div class="illo">${t[2]}</div><div class="tbody"><h3>${t[1]}</h3><p class="muted">${t[3]}</p><ul>${t[4].map(x=>`<li>${ic('check',18)}<span>${x}</span></li>`).join('')}</ul><button class="btn btn-cu" data-act="type" data-v="${t[0]}">${sel===t[0]?'Sélectionné':'Choisir'} ${ic('arrow',18)}</button></div></article>`).join('')}</div>`}
+const meter=l=>`<span class="meter" aria-label="Visibilité ${l} sur 6">${[1,2,3,4,5,6].map(i=>`<i class="${i<=l?'f':''}"></i>`).join('')}</span>`;
+
+function pHome(){
+ return `<section class="hero"><div class="w hero-grid"><div class="hero-copy rise">
+ <p class="eyebrow"><i class="dot"></i>Plateforme africaine de LIVE commerciaux</p>
+ <h1>Votre business mérite une plus grande <em>visibilité.</em></h1>
+ <p class="lead">Présentez vos produits, développez votre visibilité et touchez de nouveaux clients grâce aux LIVE OCD.</p>
+ <div class="cta-row"><button class="btn btn-cu btn-lg" data-act="reserve">Réserver un LIVE ${ic('arrow')}</button><button class="btn btn-ghost btn-lg" data-go="packages">Découvrir nos offres</button></div>
+ <ul class="ticks"><li>${ic('check',18)}Présentiel ou à distance</li><li>${ic('check',18)}Réservation en 5 étapes</li><li>${ic('check',18)}Équipe basée au Togo</li></ul></div>
+ <div class="stage rise">${africa('h',{logo:true,pins:true})}
+ <div class="float" style="left:0;top:2%"><span class="live-chip"><i></i>LIVE</span><span>Exemple de diffusion</span></div>
+ <div class="float" style="right:0;bottom:6%">${ic('users',18)}<span><b>Audience</b><br><span class="muted">partout en Afrique</span></span></div></div></div></section>
+ <section class="sec" id="concept"><div class="w two"><div class="stack"><p class="eyebrow">Notre concept</p><h2 class="h2">Un studio au Togo. Une audience partout.</h2><p class="lead">OCD Live met à votre disposition un studio de diffusion et une équipe pour présenter vos produits en direct, devant une audience qui dépasse celle de votre quartier.</p></div>
+ <div class="rows">${[['video','Vous présentez, nous diffusons','Installation, cadrage et animation : l’équipe prépare le LIVE avec vous.'],['mega','La publicité par la démonstration','Montrer un produit en direct, répondre aux questions, donner envie d’acheter.'],['globe','Une visibilité qui voyage','Depuis le studio ou depuis chez vous, dans n’importe quel pays.']].map(r=>`<div class="row"><span class="ico">${ic(r[0],22)}</span><div><h3>${r[1]}</h3><p class="muted">${r[2]}</p></div></div>`).join('')}</div></div></section>
+ <section class="sec alt"><div class="w"><p class="eyebrow">Les avantages</p><h2 class="h2" style="margin-top:.8rem;max-width:20ch">Tout pour être vu, rien de superflu.</h2><div class="adv">${[['trend','Visibilité immédiate','Faites connaître votre activité à de nouveaux clients dès le jour du LIVE.'],['users','Accompagnement d’une équipe','Une équipe OCD vous guide avant, pendant et après votre passage.'],['cal','Réservation simple','Choisissez votre créneau en ligne, depuis votre téléphone.'],['globe','Présentiel ou à distance','Au studio au Togo ou depuis votre commerce, selon votre situation.']].map(a=>`<div><span class="ico">${ic(a[0],22)}</span><div><h3>${a[1]}</h3><p class="muted">${a[2]}</p></div></div>`).join('')}</div></div></section>
+ <section class="sec"><div class="w"><p class="eyebrow">Deux façons de passer en direct</p><h2 class="h2" style="margin:.8rem 0 2rem">Choisissez votre type de LIVE</h2>${typeCards(S.type)}</div></section>
+ <section class="sec alt"><div class="w"><div style="display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap"><div><p class="eyebrow">Nos forfaits</p><h2 class="h2" style="margin-top:.8rem">Six packages, du premier LIVE au partenariat.</h2></div><button class="btn btn-ghost" data-go="packages">Voir le détail ${ic('arrow',18)}</button></div>
+ <div class="minis">${PACKS.map(p=>`<button class="mini" data-go="packages"><div class="meta"><span class="dur mono">${ic('clock',15)} ${durLbl(p.dur)}</span>${meter(p.lvl)}</div><h3>${p.name}</h3><p class="muted" style="font-size:.9rem">${p.tag}</p></button>`).join('')}</div></div></section>
+ <section class="sec" id="etapes"><div class="w"><p class="eyebrow">Comment ça marche</p><h2 class="h2" style="margin-top:.8rem">Réservez en cinq étapes.</h2><div class="steps">${[['Le type de LIVE','Présentiel ou à distance.'],['Le package','Durée et niveau de visibilité.'],['La date et l’heure','Un calendrier avec créneaux libres.'],['Vos informations','Vous et votre activité.'],['Le paiement','Confirmation immédiate.']].map((s,i)=>`<div class="st"><b>ÉTAPE ${i+1}</b><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('')}</div></div></section>
+ <section class="sec dk cta"><div class="wm">${africa('c',{fill:'transparent'})}</div><div class="w"><h2>Prêt à passer en direct ?</h2><p class="lead">Réservez votre créneau à partir du 1er décembre.</p><button class="btn btn-gold btn-lg" data-act="reserve">Réserver mon LIVE ${ic('arrow')}</button></div></section>`}
+
+const FLOW=[['type','Type'],['packages','Package'],['calendrier','Date et heure'],['reservation','Informations'],['paiement','Paiement']];
+function flow(r){const i=FLOW.findIndex(f=>f[0]===r);return `<ol class="flow" aria-label="Étapes de réservation">${FLOW.map((f,k)=>`<li class="${k===i?'on':k<i?'done':''}"><b>${k<i?'✓':k+1}</b>${f[1]}</li>`).join('')}</ol>`}
+const head=(r,eb,t,l)=>`<section class="ph"><div class="w"><p class="eyebrow">${eb}</p><h1>${t}</h1><p class="lead">${l}</p>${r?flow(r):''}</div></section>`;
+
+function pType(){return head('type','Étape 1','Quel type de LIVE voulez-vous ?','Au studio OCD au Togo, ou depuis chez vous avec l’aide de l’équipe.')+`<section class="w" style="padding-bottom:72px">${typeCards(S.type)}</section>`}
+
+function pPacks(){
+ return head(S.flow?'packages':null,'Nos six packages','Choisissez votre niveau de visibilité.','Les tarifs et les prestations seront confirmés par OCD Live. Ils se modifient depuis l’espace équipe.')+`<section class="w" style="padding-bottom:80px"><div class="packs">${PACKS.map(p=>`<article class="pk${p.id==='vip'?' vip':''}${S.pack===p.id?' sel':''}">${p.id==='premium'?'<span class="badge">Recommandé</span>':''}${p.id==='vip'?'<span class="badge">Visibilité renforcée</span>':''}
+ <div class="top"><div><h3>${p.name}</h3><p style="opacity:.75;font-size:.9rem">${p.tag}</p></div></div>
+ <div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap"><span class="dur">${ic('clock',16)} ${durLbl(p.dur)}</span>${meter(p.lvl)}</div>
+ <div class="price${p.price?'':' tbd'}">${priceTxt(p)}</div>
+ <ul>${p.perks.map(x=>`<li>${ic('check',17)}<span>${esc(x)}</span></li>`).join('')}</ul>
+ <button class="btn ${p.id==='vip'?'btn-gold':'btn-cu'}" data-act="pack" data-v="${p.id}">${S.pack===p.id?'Package choisi':'Choisir ce package'} ${ic('arrow',18)}</button></article>`).join('')}</div></section>`}
+/* ---------- tunnel de réservation ---------- */
+function recapDl(){const p=getPack(S.pack);return `<dl><dt>Type de LIVE</dt><dd>${S.type?TYPES[S.type]:'À choisir'}</dd><dt>Package</dt><dd>${p?p.name:'À choisir'}</dd><dt>Date</dt><dd>${S.date?fmtLong(S.date):'À choisir'}</dd><dt>Heure</dt><dd>${S.slot!=null?hm(S.slot)+' – '+hm(S.slot+S.dur)+' (heure de Lomé)':'À choisir'}</dd><dt>Durée</dt><dd>${durLbl(S.dur)}</dd><dt>Prix</dt><dd>${p&&p.price?esc(p.price):'À définir'}</dd></dl>`}
+function pCal(){
+ const {y,m}=S.month,first=new Date(Date.UTC(y,m,1)),lead=(first.getUTCDay()+6)%7,nd=new Date(Date.UTC(y,m+1,0)).getUTCDate();
+ let cells='';for(let i=0;i<lead;i++)cells+='<span class="day void"></span>';
+ for(let d=1;d<=nd;d++){const i=isoD(y,m,d);let cls='off',sm='',dis=' disabled';
+  if(dayOpen(i)){const n=okCount(i,S.dur);if(n){cls='av';sm=`<small>${n} créneaux</small>`;dis=''}else{cls='full';sm='<small>Complet</small>'}}
+  if(S.date===i)cls+=' sel';
+  cells+=`<button class="day ${cls}"${dis} data-act="date" data-v="${i}" aria-label="${fmtLong(i)}">${d}${sm}</button>`}
+ const atMin=y===2026&&m===11,atMax=y===2027&&m===11;
+ const sl=S.date?slotsFor(S.date,S.dur):[];
+ return head('calendrier','Étape 3','Choisissez votre date et votre heure.','Les réservations ouvrent le 1er décembre. Un créneau déjà pris ne peut plus être réservé.')+
+ `<section class="w" style="padding-bottom:80px"><div class="cal-grid"><div class="card"><div class="cal-h"><button class="sq" data-act="mprev" ${atMin?'disabled':''} aria-label="Mois précédent">${ic('left')}</button><h2>${MONTHS[m]} ${y}</h2><button class="sq" data-act="mnext" ${atMax?'disabled':''} aria-label="Mois suivant">${ic('right')}</button></div>
+ <div class="dows">${['lun','mar','mer','jeu','ven','sam','dim'].map(x=>`<span>${x}</span>`).join('')}</div><div class="days">${cells}</div>
+ <div class="legend"><span><i style="background:var(--ok)"></i>Disponible</span><span><i style="background:var(--bg2);border:1px dashed var(--line)"></i>Fermé ou complet</span><span><i style="background:var(--cu)"></i>Sélectionné</span></div></div>
+ <div class="stack"><div class="card"><span class="lbl">Durée de la session</span><div class="chips">${DURS.map(d=>`<button class="chip${S.dur===d?' on':''}" data-act="dur" data-v="${d}">${durLbl(d)}</button>`).join('')}</div>
+ ${S.pack?`<p class="muted" style="font-size:.84rem;margin-top:.7rem">Durée du package ${getPack(S.pack).name} : ${durLbl(getPack(S.pack).dur)}.</p>`:`<p class="muted" style="font-size:.84rem;margin-top:.7rem">Aucun package choisi. <button class="link" data-go="packages">Choisir un package</button></p>`}
+ <span class="lbl" style="margin-top:1.4rem">Heures de départ${S.date?' · '+fmtShort(S.date):''}</span>
+ ${S.date?`<div class="slots">${sl.map(s=>`<button class="slot${S.slot===s.c?' on':''}" ${s.ok?'':'disabled'} data-act="slot" data-v="${s.c}">${hm(s.c)}</button>`).join('')}</div><p class="muted" style="font-size:.8rem;margin-top:.7rem">Heure de Lomé (GMT). Pause de 12 h 30 à 13 h 30.</p>`:`<div class="note">${ic('cal',18)}<span>Sélectionnez un jour dans le calendrier pour voir les créneaux.</span></div>`}</div>
+ <div class="card recap"><span class="lbl" style="margin:0">Récapitulatif</span>${recapDl()}<button class="btn btn-cu" data-act="tform" ${S.date&&S.slot!=null&&S.type&&S.pack?'':'disabled'}>Continuer ${ic('arrow',18)}</button>${S.type&&S.pack?'':`<p class="muted" style="font-size:.82rem">Il manque ${!S.type?'le type de LIVE':'le package'}. <button class="link" data-go="${!S.type?'type':'packages'}">Le choisir</button></p>`}</div></div></div></section>`}
+
+const fld=(k,l,o={})=>{const v=S.form[k],e=S.errors[k];const t=o.t||'text';
+ const inp=o.sel?`<select id="f-${k}" data-bind="f.${k}">${o.sel.map(x=>`<option${x===v?' selected':''}>${esc(x)}</option>`).join('')}</select>`:o.rows?`<textarea id="f-${k}" data-bind="f.${k}" placeholder="${esc(o.ph||'')}">${esc(v)}</textarea>`:`<input id="f-${k}" type="${t}" data-bind="f.${k}" value="${esc(v)}" placeholder="${esc(o.ph||'')}" autocomplete="${o.ac||'off'}">`;
+ return `<div class="fld${o.full?' full':''}${e?' err':''}"><label for="f-${k}">${l}</label>${inp}${e?`<span class="em">${e}</span>`:''}</div>`};
+function pForm(){
+ const st=S.step,p=getPack(S.pack),F=S.form;
+ const bar=`<div class="fs">${[0,1,2,3].map(i=>`<span class="${i===st?'on':i<st?'done':''}"></span>`).join('')}</div>`;
+ const titles=['Vos informations personnelles','Votre activité commerciale','Votre réservation','Vérifiez avant de valider'];
+ let body='';
+ if(st===0)body=`<div class="fgrid">${fld('nom','Nom et prénom',{full:1,ph:'Ex. Afi Mensah',ac:'name'})}${fld('whatsapp','Numéro WhatsApp',{t:'tel',ph:'+228 90 00 00 00',ac:'tel'})}${fld('email','Adresse email',{t:'email',ph:'vous@exemple.com',ac:'email'})}${fld('pays','Pays',{sel:PAYS})}${fld('ville','Ville',{ph:'Ex. Lomé'})}</div>`;
+ if(st===1)body=`<div class="fgrid">${fld('entreprise','Nom de l’entreprise ou du commerce',{full:1})}${fld('domaine','Domaine d’activité',{ph:'Ex. Mode, alimentation'})}${fld('produits','Produits ou services à présenter',{ph:'Ex. Robes, pagnes'})}${fld('description','Description de votre activité',{full:1,rows:1,ph:'Quelques lignes sur ce que vous vendez'})}${fld('adresse','Adresse du commerce (si nécessaire)',{full:1})}</div>`;
+ if(st===2)body=`<div class="fgrid"><div class="fld"><label for="r-type">Type de LIVE</label><select id="r-type" data-bindr="type"><option value="">Choisir</option>${Object.keys(TYPES).map(k=>`<option value="${k}"${S.type===k?' selected':''}>${TYPES[k]}</option>`).join('')}</select></div>
+ <div class="fld"><label for="r-pack">Package</label><select id="r-pack" data-bindr="pack"><option value="">Choisir</option>${PACKS.map(x=>`<option value="${x.id}"${S.pack===x.id?' selected':''}>${x.name}</option>`).join('')}</select></div></div>
+ <div class="rv" style="margin-top:1rem"><header><h4>Date et heure</h4><button class="link" data-go="calendrier">Modifier</button></header><dl><dt>Date</dt><dd>${S.date?fmtLong(S.date):'Non choisie'}</dd><dt>Heure</dt><dd>${S.slot!=null?hm(S.slot)+' – '+hm(S.slot+S.dur):'Non choisie'}</dd><dt>Durée</dt><dd>${durLbl(S.dur)}</dd><dt>Mode</dt><dd>${S.type==='presentiel'?'Présentiel au studio, Togo':S.type==='distance'?'À distance':'—'}</dd></dl></div>
+ ${S.errors.res?`<div class="note bad" style="margin-top:1rem">${ic('x',18)}<span>${S.errors.res}</span></div>`:''}`;
+ if(st===3)body=`<div class="stack"><div class="rv"><header><h4>Vous</h4><button class="link" data-act="step" data-v="0">Modifier</button></header><dl><dt>Nom</dt><dd>${esc(F.nom)}</dd><dt>WhatsApp</dt><dd>${esc(F.whatsapp)}</dd><dt>Email</dt><dd>${esc(F.email)}</dd><dt>Localisation</dt><dd>${esc(F.ville)}, ${esc(F.pays)}</dd></dl></div>
+ <div class="rv"><header><h4>Votre activité</h4><button class="link" data-act="step" data-v="1">Modifier</button></header><dl><dt>Entreprise</dt><dd>${esc(F.entreprise)}</dd><dt>Domaine</dt><dd>${esc(F.domaine)}</dd><dt>Produits</dt><dd>${esc(F.produits)}</dd><dt>Description</dt><dd>${esc(F.description)}</dd>${F.adresse?`<dt>Adresse</dt><dd>${esc(F.adresse)}</dd>`:''}</dl></div>
+ <div class="rv"><header><h4>Réservation</h4><button class="link" data-act="step" data-v="2">Modifier</button></header>${recapDl().replace('<dl>','<dl>')}</div></div>`;
+ return head('reservation','Étape 4','Parlez-nous de vous et de votre activité.','Ces informations sont transmises à l’équipe OCD pour préparer votre LIVE.')+
+ `<section class="w" style="padding-bottom:80px"><div class="form-grid"><div class="card">${bar}<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem"><h2 style="font-size:1.5rem">${titles[st]}</h2><button class="link" style="font-size:.85rem" data-act="demo">Remplir un exemple</button></div>${body}
+ <div class="fnav">${st>0?`<button class="btn btn-ghost" data-act="prev">${ic('left',18)} Retour</button>`:'<span></span>'}<button class="btn btn-cu" data-act="next">${st===3?'Valider et passer au paiement':'Continuer'} ${ic('arrow',18)}</button></div></div>
+ <aside class="card recap"><span class="lbl" style="margin:0">Votre réservation</span>${recapDl()}</aside></div></section>`}
+
+function pPay(){
+ const p=getPack(S.pack),F=S.form,M=[['Mobile Money','phone','Opérateurs à définir'],['Carte bancaire','card','Passerelle à définir'],['Virement','mail','Coordonnées à définir'],['Autre moyen','star','À définir avec OCD']];
+ return head('paiement','Étape 5','Paiement et confirmation.','Les moyens de paiement seront configurés plus tard. Cette étape est une simulation.')+
+ `<section class="w" style="padding-bottom:80px"><div class="form-grid"><div class="card stack"><h2 style="font-size:1.5rem">Moyen de paiement</h2><div class="meths">${M.map(x=>`<button class="meth${S.method===x[0]?' on':''}" data-act="method" data-v="${x[0]}"><b>${ic(x[1],20)}${x[0]}</b><small>Emplacement réservé · ${x[2]}</small></button>`).join('')}</div>
+ ${S.errors.pay?`<div class="note bad">${ic('x',18)}<span>${S.errors.pay}</span></div>`:''}<div class="note ok">${ic('shield',18)}<span>Aucun paiement réel n’est effectué dans cette maquette.</span></div>
+ <button class="btn btn-cu btn-lg" data-act="pay" ${S.pay==='processing'?'disabled':''}>${S.pay==='processing'?'Traitement en cours…':'Confirmer et payer (simulation)'}</button></div>
+ <aside class="card recap"><span class="lbl" style="margin:0">Récapitulatif</span>${recapDl()}<hr style="border:0;border-top:1px solid var(--line);width:100%"><dl><dt>Client</dt><dd>${esc(F.nom)}</dd><dt>Entreprise</dt><dd>${esc(F.entreprise)}</dd><dt>Statut du paiement</dt><dd><span class="pill warn">En attente</span></dd></dl></aside></div></section>`}
+
+function mailDl(b){const p=getPack(b.pack);return `<dl><dt>Client</dt><dd>${esc(b.name)}</dd><dt>Activité</dt><dd>${esc(b.biz)} · ${esc(b.dom)}</dd><dt>Pays et ville</dt><dd>${esc(b.city)}, ${esc(b.country)}</dd><dt>Téléphone</dt><dd>${esc(b.phone)}</dd><dt>Type de LIVE</dt><dd>${TYPES[b.type]}</dd><dt>Package</dt><dd>${p.name}</dd><dt>Date</dt><dd>${fmtLong(b.date)}</dd><dt>Heure</dt><dd>${hm(b.start)} – ${hm(b.start+b.dur)}</dd><dt>Durée</dt><dd>${durLbl(b.dur)}</dd><dt>Paiement</dt><dd>${PAYL[b.pay]}</dd></dl>`}
+const PAYL={paye:'Payé',attente:'En attente',echoue:'Échoué'},STL={attente:'En attente',confirmee:'Confirmée',annulee:'Annulée'};
+function pOk(){const b=S.last;if(!b)return '';
+ return `<section class="sec"><div class="w"><div class="ok-wrap rise"><span class="check">${ic('check',40)}</span><h1 class="h2">Votre LIVE est réservé.</h1><p class="lead">Merci ${esc(b.name.split(' ')[0])}. Une confirmation vous sera envoyée sur WhatsApp et par email.</p><div class="num">${b.id}</div>
+ <p class="muted">${fmtLong(b.date)} · ${hm(b.start)} – ${hm(b.start+b.dur)} (heure de Lomé)</p>
+ <div class="mail"><header><b>Notification envoyée à l’équipe OCD</b><span class="muted">À : ${esc(S.mailTo)} · et tableau de bord</span></header>${mailDl(b)}</div>
+ <div class="cta-row" style="justify-content:center"><button class="btn btn-cu" data-act="again">Nouvelle réservation</button><button class="btn btn-ghost" data-go="accueil">Retour à l’accueil</button></div></div></div></section>`}
+/* ---------- espace administrateur ---------- */
+const pill=(k,t)=>`<span class="pill ${k}">${t}</span>`;
+const stPill=s=>pill(s==='confirmee'?'ok':s==='attente'?'warn':'bad',STL[s]);
+const payPill=s=>pill(s==='paye'?'ok':s==='attente'?'warn':'bad',PAYL[s]);
+const live=()=>S.bookings.filter(b=>b.status!=='annulee');
+const unread=()=>S.notifs.filter(n=>n.unread).length;
+const bk=id=>S.bookings.find(b=>b.id===id);
+function weekChart(){
+ const W=[['1–6 déc.','2026-12-01','2026-12-06'],['7–13 déc.','2026-12-07','2026-12-13'],['14–20 déc.','2026-12-14','2026-12-20'],['21–27 déc.','2026-12-21','2026-12-27'],['28 déc.–3 janv.','2026-12-28','2027-01-03']];
+ const v=W.map(w=>live().filter(b=>b.date>=w[1]&&b.date<=w[2]).length),top=Math.max(4,Math.ceil(Math.max(...v)/2)*2);
+ const w=560,h=230,pl=30,pt=18,pb=38,iw=(w-pl-8)/W.length,y=n=>pt+(h-pt-pb)*(1-n/top);
+ let s=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto" role="img" aria-label="Réservations par semaine">`;
+ [0,top/2,top].forEach(t=>{s+=`<line x1="${pl}" x2="${w-8}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${pl-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--ink2)">${t}</text>`});
+ v.forEach((n,i)=>{const x=pl+i*iw+iw/2,bh=y(0)-y(n);s+=`<rect x="${x-24}" y="${y(n)}" width="48" height="${bh}" rx="6" fill="var(--cu)"/><text x="${x}" y="${y(n)-6}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">${n}</text><text x="${x}" y="${h-14}" text-anchor="middle" font-size="10.5" fill="var(--ink2)">${W[i][0]}</text>`});
+ return s+'</svg>'}
+function vDash(){
+ const L=live(),cl=new Set(S.bookings.map(b=>b.email)).size,nx=L.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.start-b.start).slice(0,4);
+ const pres=L.filter(b=>b.type==='presentiel').length,dist=L.length-pres;
+ return `<div class="kpis">${[['cal','Réservations',L.length],['clock','En attente',S.bookings.filter(b=>b.status==='attente').length],['check','Confirmées',S.bookings.filter(b=>b.status==='confirmee').length],['users','Clients enregistrés',cl]].map(k=>`<div class="kpi"><span>${ic(k[0],16)}${k[1]}</span><b>${k[2]}</b></div>`).join('')}</div>
+ <div class="g2"><div class="card"><h3>Réservations par semaine</h3>${weekChart()}</div><div class="card"><h3>Prochains LIVE</h3>${nx.map(b=>`<div class="li"><span class="when">${fmtShort(b.date)}<br>${hm(b.start)}</span><div><b>${esc(b.biz)}</b><small>${getPack(b.pack).name} · ${TYPES[b.type]}</small></div></div>`).join('')}</div></div>
+ <div class="g2"><div class="card"><h3>Présentiel et distance</h3><div style="display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--line)"><i style="width:${L.length?pres/L.length*100:0}%;background:var(--cu)"></i><i style="flex:1;background:var(--gold)"></i></div><div class="legend"><span><i style="background:var(--cu)"></i>Présentiel · ${pres}</span><span><i style="background:var(--gold)"></i>Distance · ${dist}</span></div></div>
+ <div class="card"><h3>Dernières notifications</h3>${S.notifs.slice(0,3).map(n=>{const b=bk(n.b);return `<div class="li"><span class="ico" style="width:36px;height:36px">${ic('bell',16)}</span><div><b>Nouvelle réservation · ${esc(b.name)}</b><small>${n.t}</small></div></div>`}).join('')}</div></div>`}
+function vResa(){
+ const F=[['all','Toutes'],['attente','En attente'],['confirmee','Confirmées'],['annulee','Annulées']],L=S.bookings.filter(b=>S.filter==='all'||b.status===S.filter);
+ return `<div class="tabs">${F.map(f=>`<button class="chip${S.filter===f[0]?' on':''}" data-act="filter" data-v="${f[0]}">${f[1]}</button>`).join('')}</div><div class="card"><div class="tw"><table><thead><tr><th>N°</th><th>Client</th><th>Activité</th><th>Lieu</th><th>LIVE</th><th>Package</th><th>Date et heure</th><th>Paiement</th><th>Statut</th></tr></thead><tbody>${L.map(b=>`<tr class="clk" tabindex="0" data-act="detail" data-v="${b.id}"><td class="mono">${b.id.slice(-4)}</td><td><b>${esc(b.name)}</b></td><td>${esc(b.biz)}</td><td>${esc(b.city)}, ${esc(b.country)}</td><td>${b.type==='presentiel'?'Présentiel':'Distance'}</td><td>${getPack(b.pack).name}</td><td>${fmtShort(b.date)} · ${hm(b.start)}</td><td>${payPill(b.pay)}</td><td>${stPill(b.status)}</td></tr>`).join('')}</tbody></table></div></div>`}
+function vCal(){
+ const {y,m}=S.amonth,lead=(new Date(Date.UTC(y,m,1)).getUTCDay()+6)%7,nd=new Date(Date.UTC(y,m+1,0)).getUTCDate();
+ let c='';for(let i=0;i<lead;i++)c+='<div class="ac void"></div>';
+ for(let d=1;d<=nd;d++){const i=isoD(y,m,d),ev=S.bookings.filter(b=>b.date===i).sort((a,b)=>a.start-b.start);c+=`<div class="ac"><b>${d}</b>${ev.map(b=>`<div class="ev ${b.status==='confirmee'?'ok':b.status==='attente'?'warn':'bad'}" title="${esc(b.biz)}">${hm(b.start)} ${esc(b.biz)}</div>`).join('')}</div>`}
+ return `<div class="card"><div class="cal-h"><button class="sq" data-act="amprev" aria-label="Mois précédent">${ic('left')}</button><h2>${MONTHS[m]} ${y}</h2><button class="sq" data-act="amnext" aria-label="Mois suivant">${ic('right')}</button></div><div class="tw"><div class="acal">${c}</div></div><div class="legend"><span><i style="background:var(--ok)"></i>Confirmé</span><span><i style="background:var(--warn)"></i>En attente</span><span><i style="background:var(--bad)"></i>Annulé</span></div></div>`}
+function vPacks(){return `<p class="muted">Ces champs alimentent directement le site public. Modifiez un tarif ou une prestation et rouvrez « Nos offres » pour le voir.</p>`+PACKS.map(p=>`<div class="card"><h3>${p.name}</h3><div class="ed"><div class="fld"><label for="pn-${p.id}">Nom</label><input id="pn-${p.id}" data-pk="${p.id}" data-fld="name" value="${esc(p.name)}"></div><div class="fld"><label for="pd-${p.id}">Durée</label><select id="pd-${p.id}" data-pk="${p.id}" data-fld="dur">${DURS.map(d=>`<option value="${d}"${d===p.dur?' selected':''}>${durLbl(d)}</option>`).join('')}</select></div><div class="fld"><label for="pp-${p.id}">Prix</label><input id="pp-${p.id}" data-pk="${p.id}" data-fld="price" value="${esc(p.price)}" placeholder="À définir"></div></div><div class="fld" style="margin-top:.8rem"><label for="pl-${p.id}">Services inclus (un par ligne)</label><textarea id="pl-${p.id}" data-pk="${p.id}" data-fld="perks">${esc(p.perks.join('\n'))}</textarea></div></div>`).join('')}
+function vDispo(){
+ const D=[[1,'Lundi'],[2,'Mardi'],[3,'Mercredi'],[4,'Jeudi'],[5,'Vendredi'],[6,'Samedi'],[0,'Dimanche']];
+ return `<div class="g2"><div class="card"><h3>Jours d’ouverture du studio</h3>${D.map(d=>`<div class="li"><div style="flex:1"><b>${d[1]}</b><small>${S.openDays[d[0]]?'09:00 – 18:00 · pause 12:30 – 13:30':'Fermé'}</small></div><button class="sw" role="switch" aria-checked="${S.openDays[d[0]]}" aria-label="${d[1]}" data-act="day" data-v="${d[0]}"></button></div>`).join('')}</div>
+ <div class="card stack"><h3 style="margin:0">Dates bloquées</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><div class="fld" style="flex:1;min-width:150px"><label for="bl">Date à bloquer</label><input id="bl" type="date" min="${START}"></div><button class="btn btn-cu" style="align-self:end" data-act="block">Bloquer</button></div>
+ ${S.blocked.length?S.blocked.map(d=>`<div class="li"><b style="flex:1">${fmtLong(d)}</b><button class="link" data-act="unblock" data-v="${d}">Retirer</button></div>`).join(''):'<p class="muted">Aucune date bloquée.</p>'}
+ <div class="note ok">${ic('shield',18)}<span>Un créneau réservé est retiré automatiquement du calendrier public. Deux clients ne peuvent pas prendre la même heure.</span></div></div></div>`}
+function vClients(){const m={};S.bookings.forEach(b=>{(m[b.email]=m[b.email]||[]).push(b)});
+ return `<div class="card"><div class="tw"><table><thead><tr><th>Client</th><th>Entreprise</th><th>Pays et ville</th><th>WhatsApp</th><th>Email</th><th>Réservations</th><th></th></tr></thead><tbody>${Object.values(m).map(a=>{const b=a[a.length-1];return `<tr><td><b>${esc(b.name)}</b></td><td>${esc(b.biz)}</td><td>${esc(b.city)}, ${esc(b.country)}</td><td class="mono">${esc(b.phone)}</td><td>${esc(b.email)}</td><td>${a.length}</td><td><button class="btn btn-ghost btn-sm" data-act="detail" data-v="${b.id}">Voir</button></td></tr>`}).join('')}</tbody></table></div></div>`}
+function vPay(){const c=k=>S.bookings.filter(b=>b.pay===k).length;
+ return `<div class="kpis" style="grid-template-columns:repeat(3,1fr)">${[['Payés','paye'],['En attente','attente'],['Échoués','echoue']].map(k=>`<div class="kpi"><span>${k[0]}</span><b>${c(k[1])}</b></div>`).join('')}</div><div class="card"><div class="tw"><table><thead><tr><th>Référence</th><th>Client</th><th>Package</th><th>Montant</th><th>Statut</th><th></th></tr></thead><tbody>${S.bookings.map(b=>{const p=getPack(b.pack);return `<tr><td class="mono">${b.id}</td><td>${esc(b.name)}</td><td>${p.name}</td><td>${p.price?esc(p.price):'À définir'}</td><td>${payPill(b.pay)}</td><td>${b.pay!=='paye'?`<button class="btn btn-ghost btn-sm" data-act="markpaid" data-v="${b.id}">Marquer payé</button>`:''}</td></tr>`}).join('')}</tbody></table></div></div>`}
+function vNotif(){const last=S.bookings[S.bookings.length-1],C=[['email','Email à l’équipe OCD','mail'],['dash','Notification dans le tableau de bord','bell'],['wa','WhatsApp (bientôt)','chat']];
+ return `<div class="g2"><div class="stack"><div class="card"><h3>Canaux</h3>${C.map(c=>`<div class="li"><span class="ico" style="width:38px;height:38px">${ic(c[2],17)}</span><b style="flex:1">${c[1]}</b><button class="sw" role="switch" aria-checked="${S.cfg[c[0]]}" aria-label="${c[1]}" data-act="cfg" data-v="${c[0]}"></button></div>`).join('')}<div class="fld" style="margin-top:1rem"><label for="mt">Adresse de réception</label><input id="mt" data-bind="mailTo" value="${esc(S.mailTo)}"></div></div>
+ <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Centre de notifications</h3><button class="link" data-act="readall">Tout marquer comme lu</button></div>${S.notifs.map(n=>{const b=bk(n.b);return `<div class="li"><span class="ico" style="width:36px;height:36px">${ic('bell',16)}</span><div style="flex:1"><b>Nouvelle réservation · ${esc(b.name)}</b><small>${getPack(b.pack).name} · ${n.t}</small></div>${n.unread?'<i class="dot"></i>':''}</div>`}).join('')}</div></div>
+ <div class="mail"><header><b>Aperçu de l’email envoyé à chaque réservation</b><span class="muted">Objet : Nouvelle réservation OCD Live · ${esc(last.name)}</span></header>${mailDl(last)}</div></div>`}
+function drawer(){const b=bk(S.detail);if(!b)return '';const p=getPack(b.pack);
+ const sec=(t,rows)=>`<div class="rv"><h4>${t}</h4><dl>${rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}</dl></div>`;
+ return `<div class="ov" data-act="closed"></div><aside class="drawer" role="dialog" aria-label="Détail de la réservation"><div style="display:flex;justify-content:space-between;align-items:start;gap:1rem"><div><p class="mono muted">${b.id}</p><h2 style="font-size:1.6rem">${esc(b.biz)}</h2><div style="display:flex;gap:.4rem;margin-top:.5rem">${stPill(b.status)}${payPill(b.pay)}</div></div><button class="sq" data-act="closed" aria-label="Fermer">${ic('x')}</button></div>
+ ${sec('Client',[['Nom',esc(b.name)],['WhatsApp',esc(b.phone)],['Email',esc(b.email)],['Lieu',esc(b.city)+', '+esc(b.country)]])}${sec('Activité',[['Domaine',esc(b.dom)],['Produits',esc(b.prod)],['Description',esc(b.desc)],['Adresse',esc(b.addr)||'—']])}
+ ${sec('Réservation',[['Type',TYPES[b.type]],['Package',p.name],['Date',fmtLong(b.date)],['Heure',hm(b.start)+' – '+hm(b.start+b.dur)],['Durée',durLbl(b.dur)]])}
+ <div class="cta-row">${b.status!=='confirmee'?`<button class="btn btn-cu" data-act="setst" data-v="${b.id}|confirmee">Confirmer</button>`:''}${b.status!=='annulee'?`<button class="btn btn-ghost" data-act="setst" data-v="${b.id}|annulee">Annuler la réservation</button>`:''}</div></aside>`}
+function pAdmin(){
+ if(!S.auth)return `<div class="login"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center">${logo()}<span class="ico" style="background:var(--dark);color:var(--gold)">${ic('lock',20)}</span></div><h1 style="font-size:1.8rem">Espace équipe OCD</h1><p class="muted" style="color:#CDBBA9">Accès réservé. Démonstration : aucun mot de passe réel.</p>
+ <div class="fld"><label for="lu">Identifiant</label><input id="lu" value="equipe@ocd-live.example" autocomplete="off"></div><div class="fld"><label for="lp">Mot de passe</label><input id="lp" type="password" value="demonstration" autocomplete="off"></div>
+ <button class="btn btn-gold" data-act="login">Se connecter ${ic('arrow',18)}</button><button class="link" style="color:var(--gold);text-align:left" data-go="accueil">Retour au site</button></div></div>`;
+ const V=[['dash','Tableau de bord','dash',vDash],['resa','Réservations','cal',vResa],['cal','Calendrier des LIVE','clock',vCal],['packs','Packages','box',vPacks],['dispo','Disponibilités','shield',vDispo],['clients','Clients','users',vClients],['pay','Paiements','card',vPay],['notif','Notifications','bell',vNotif]];
+ const cur=V.find(v=>v[0]===S.view)||V[0];
+ return `<div class="adm"><aside class="side"><div>${logo()}<p class="tag" style="margin-top:.5rem">Espace équipe</p></div><nav aria-label="Administration">${V.map(v=>`<button class="sn${v[0]===cur[0]?' on':''}" data-act="aview" data-v="${v[0]}">${ic(v[2],18)}${v[1]}${v[0]==='notif'&&unread()?`<span class="cnt">${unread()}</span>`:''}</button>`).join('')}</nav><button class="sn" style="margin-top:auto" data-go="accueil">${ic('out',18)}Retour au site</button></aside>
+ <main class="main"><div class="tb"><h1>${cur[1]}</h1><button class="sq" data-act="aview" data-v="notif" aria-label="Notifications">${ic('bell')}</button></div>${cur[3]()}</main></div>${drawer()}`}
+/* ---------- routage et interactions ---------- */
+const ROUTES=['accueil','type','calendrier','packages','reservation','paiement','succes','admin'];
+const PAGES={accueil:pHome,type:pType,calendrier:pCal,packages:pPacks,reservation:pForm,paiement:pPay,succes:pOk};
+function render(){
+ const r=S.route;
+ app.innerHTML=r==='admin'?pAdmin():header()+`<main class="page" id="main">${PAGES[r]()}</main>`+(r==='succes'?'':footer());
+}
+function route(){let r=location.hash.slice(1);if(!ROUTES.includes(r))r='accueil';
+ if(r==='paiement'&&!(S.type&&S.pack&&S.date&&S.slot!=null)){r='reservation'}
+ if(r==='succes'&&!S.last)r='accueil';
+ S.route=r;S.menu=false;render();if(!S.keepScroll)window.scrollTo(0,0);S.keepScroll=false}
+const go=r=>{if(location.hash==='#'+r)route();else location.hash=r};
+window.addEventListener('hashchange',route);
+function scrollTo2(id){const f=()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
+ if(S.route!=='accueil'){go('accueil');setTimeout(f,120)}else{S.menu=false;render();f()}}
+
+function validate(st){const F=S.form,e={},need=(k,m)=>{if(!String(F[k]).trim())e[k]=m||'Champ obligatoire'};
+ if(st===0){need('nom');need('whatsapp');need('email');need('ville');
+  if(F.whatsapp.trim()&&F.whatsapp.replace(/\D/g,'').length<8)e.whatsapp='Numéro trop court';
+  if(F.email.trim()&&!/^\S+@\S+\.\S+$/.test(F.email))e.email='Adresse email invalide'}
+ if(st===1){need('entreprise');need('domaine');need('produits');need('description')}
+ if(st===2){if(!S.type||!S.pack)e.res='Choisissez un type de LIVE et un package.';else if(!S.date||S.slot==null)e.res='Choisissez une date et une heure dans le calendrier.'}
+ S.errors=e;return !Object.keys(e).length}
+
+function finalize(){
+ const F=S.form,n=S.bookings.length+1031,b={id:'OCD-26-'+n,name:F.nom,biz:F.entreprise,dom:F.domaine,country:F.pays,city:F.ville,phone:F.whatsapp,email:F.email,type:S.type,pack:S.pack,date:S.date,start:S.slot,dur:S.dur,status:'confirmee',pay:'paye',prod:F.produits,desc:F.description,addr:F.adresse};
+ S.bookings.push(b);addTaken(b);S.notifs.unshift({id:Date.now(),b:b.id,t:'à l’instant',unread:true});S.last=b}
+function resetFlow(){S.type=S.pack=S.date=null;S.slot=null;S.step=0;S.method=null;S.pay='idle';S.flow=false;S.errors={};
+ S.form={nom:'',whatsapp:'',email:'',pays:'Togo',ville:'',entreprise:'',domaine:'',produits:'',description:'',adresse:''}}
+
+function act(a,v,el){
+ switch(a){
+ case 'menu':S.menu=!S.menu;render();break;
+ case 'reserve':resetFlowKeep();S.flow=true;go('type');break;
+ case 'type':S.type=v;S.flow=true;go(S.pack?'calendrier':'packages');break;
+ case 'pack':{S.pack=v;S.dur=getPack(v).dur;S.slot=null;S.flow=true;go(S.type?'calendrier':'type');break}
+ case 'mprev':S.month=S.month.m===0?{y:S.month.y-1,m:11}:{y:S.month.y,m:S.month.m-1};render();break;
+ case 'mnext':S.month=S.month.m===11?{y:S.month.y+1,m:0}:{y:S.month.y,m:S.month.m+1};render();break;
+ case 'date':S.date=v;S.slot=null;S.keepScroll=true;render();break;
+ case 'slot':S.slot=+v;S.keepScroll=true;render();break;
+ case 'dur':S.dur=+v;if(S.date&&S.slot!=null&&!slotsFor(S.date,S.dur).find(s=>s.c===S.slot&&s.ok))S.slot=null;render();break;
+ case 'tform':go('reservation');break;
+ case 'demo':Object.assign(S.form,{nom:'Afi Mensah',whatsapp:'+228 90 12 34 56',email:'afi@exemple.test',pays:'Togo',ville:'Lomé',entreprise:'Afi Mode',domaine:'Mode et couture',produits:'Robes, pagnes, accessoires',description:'Collection de fin d’année en tissus locaux.',adresse:''});S.errors={};render();break;
+ case 'next':if(validate(S.step)){if(S.step===3)go('paiement');else{S.step++;render();window.scrollTo(0,0)}}else render();break;
+ case 'prev':S.step=Math.max(0,S.step-1);S.errors={};render();break;
+ case 'step':S.step=+v;S.errors={};render();break;
+ case 'method':S.method=v;S.errors={};render();break;
+ case 'pay':if(!S.method){S.errors={pay:'Choisissez un moyen de paiement pour la simulation.'};render();break}
+  S.pay='processing';render();setTimeout(()=>{finalize();S.pay='done';go('succes')},1000);break;
+ case 'again':resetFlow();go('type');break;
+ case 'login':S.auth=true;render();break;
+ case 'aview':S.view=v;S.detail=null;render();window.scrollTo(0,0);break;
+ case 'filter':S.filter=v;render();break;
+ case 'detail':S.detail=v;render();break;
+ case 'closed':S.detail=null;render();break;
+ case 'setst':{const [id,st]=v.split('|'),b=bk(id);b.status=st;if(st==='confirmee'&&b.pay==='attente'){}if(st==='annulee'){for(let c=b.start;c<b.start+b.dur;c+=30)S.taken.delete(b.date+'|'+c)}else addTaken(b);render();break}
+ case 'markpaid':bk(v).pay='paye';render();break;
+ case 'amprev':S.amonth=S.amonth.m===0?{y:S.amonth.y-1,m:11}:{y:S.amonth.y,m:S.amonth.m-1};render();break;
+ case 'amnext':S.amonth=S.amonth.m===11?{y:S.amonth.y+1,m:0}:{y:S.amonth.y,m:S.amonth.m+1};render();break;
+ case 'day':S.openDays[v]=!S.openDays[v];render();break;
+ case 'block':{const d=document.getElementById('bl').value;if(d&&!S.blocked.includes(d)){S.blocked.push(d);S.blocked.sort()}render();break}
+ case 'unblock':S.blocked=S.blocked.filter(d=>d!==v);render();break;
+ case 'cfg':S.cfg[v]=!S.cfg[v];render();break;
+ case 'readall':S.notifs.forEach(n=>n.unread=false);render();break}}
+function resetFlowKeep(){S.errors={};S.step=0}
+
+app.addEventListener('click',e=>{const t=e.target.closest('[data-go],[data-act],[data-scroll]');if(!t)return;
+ if(t.tagName==='A')e.preventDefault();
+ if(t.dataset.go){go(t.dataset.go);return}
+ if(t.dataset.scroll){scrollTo2(t.dataset.scroll);return}
+ act(t.dataset.act,t.dataset.v,t)});
+app.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr[data-act]')){e.preventDefault();act(e.target.dataset.act,e.target.dataset.v)}
+ if(e.key==='Escape'&&S.detail){S.detail=null;render()}});
+app.addEventListener('input',e=>{const el=e.target,k=el.dataset.bind;
+ if(k){if(k.startsWith('f.')){S.form[k.slice(2)]=el.value;const f=el.closest('.fld');if(f&&f.classList.contains('err')){f.classList.remove('err');const m=f.querySelector('.em');if(m)m.remove();delete S.errors[k.slice(2)]}}else S[k]=el.value}
+ if(el.dataset.pk){const p=getPack(el.dataset.pk),f=el.dataset.fld;if(f==='perks')p.perks=el.value.split('\n').map(x=>x.trim()).filter(Boolean);else if(f==='dur')p.dur=+el.value;else p[f]=el.value}});
+app.addEventListener('change',e=>{const el=e.target;
+ if(el.dataset.bind&&el.dataset.bind.startsWith('f.'))S.form[el.dataset.bind.slice(2)]=el.value;
+ if(el.dataset.pk&&el.dataset.fld==='dur'){getPack(el.dataset.pk).dur=+el.value}
+ if(el.dataset.bindr){const k=el.dataset.bindr;S[k]=el.value||null;if(k==='pack'&&el.value){S.dur=getPack(el.value).dur;S.slot=null}S.keepScroll=true;render()}});
+route();
+</script>
+
+</body></html>
