@@ -9,6 +9,7 @@
  --gold:#F2B33D;--gold-hi:#FFD47A;--glow:rgba(242,179,61,.5);
  --bg:#FFFFFF;--bg2:#FAF5EF;--card:#FFFFFF;--ink:#17110D;--ink2:#5F5148;--line:#EBDFD2;
  --bg-a:rgba(255,255,255,.88);--map-fill:#FFF9F1;
+ --hero-overlay:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.88) 45%,rgba(255,255,255,.18) 100%);
  --dark:#17110D;--on-dark:#F8F1E8;--dark2:#241B15;--dark-line:#3A2C22;
  --ok:#1D7A4A;--ok-bg:#E3F3EA;--warn:#8F5A0E;--warn-bg:#FBF0D9;--bad:#A8321C;--bad-bg:#FBE4DE;
  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Figtree',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -17,11 +18,13 @@
  --cu:#EE8F50;--cu-d:#F5AE7C;--on-cu:#1C0F06;--cu-soft:#2E1B10;
  --bg:#120D0A;--bg2:#1A130E;--card:#1D1611;--ink:#F7F0E8;--ink2:#BBAB9B;--line:#36291F;
  --bg-a:rgba(18,13,10,.88);--map-fill:#1F1812;--dark:#0A0604;--dark2:#17100B;--dark-line:#33261C;
+ --hero-overlay:linear-gradient(90deg,rgba(18,13,10,.96) 0%,rgba(18,13,10,.88) 45%,rgba(18,13,10,.24) 100%);
  --ok:#58C88A;--ok-bg:#12281C;--warn:#E9B558;--warn-bg:#2B2110;--bad:#F08A72;--bad-bg:#2D1510;color-scheme:dark}}
 :root[data-theme="dark"]{
  --cu:#EE8F50;--cu-d:#F5AE7C;--on-cu:#1C0F06;--cu-soft:#2E1B10;
  --bg:#120D0A;--bg2:#1A130E;--card:#1D1611;--ink:#F7F0E8;--ink2:#BBAB9B;--line:#36291F;
  --bg-a:rgba(18,13,10,.88);--map-fill:#1F1812;--dark:#0A0604;--dark2:#17100B;--dark-line:#33261C;
+ --hero-overlay:linear-gradient(90deg,rgba(18,13,10,.96) 0%,rgba(18,13,10,.88) 45%,rgba(18,13,10,.24) 100%);
  --ok:#58C88A;--ok-bg:#12281C;--warn:#E9B558;--warn-bg:#2B2110;--bad:#F08A72;--bad-bg:#2D1510;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -74,7 +77,7 @@ p{margin:0}a{color:inherit}button{font:inherit;cursor:pointer;color:inherit}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .rise{animation:fade .8s both}
 /* hero */
-.hero{position:relative;overflow:hidden;padding-block:clamp(36px,6vw,72px) clamp(48px,7vw,88px);background:radial-gradient(60% 60% at 80% 40%,var(--cu-soft),transparent 70%)}
+.hero{position:relative;overflow:hidden;padding-block:clamp(36px,6vw,72px) clamp(48px,7vw,88px);background:var(--hero-overlay),url("./studio-ocd-live.png") center 48%/cover no-repeat}
 .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(24px,4vw,64px);align-items:center}
 .hero-copy{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
 .hero h1{font-size:clamp(2.5rem,6.4vw,5rem);font-weight:800;line-height:.98}
